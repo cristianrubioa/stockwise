@@ -1,0 +1,46 @@
+# Go binaries and cache
+*.exe
+*.out
+*.a
+*.o
+*.so
+go.sum
+go.work
+
+# Build and module cache
+/.cache
+/.tmp
+/.idea
+/.vscode
+
+# Temporary and build directories
+bin/
+build/
+dist/
+pkg/
+
+# Test results and coverage reports
+*.test
+*.coverprofile
+cover.out
+
+# Editor configuration files
+*.swp
+*.swo
+.DS_Store
+/.idea/
+.vscode/
+
+# Database files
+cockroach-data/
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+.env.*
+
+# Log files
+*.log
+logs/
+debug.log
