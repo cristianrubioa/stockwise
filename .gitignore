@@ -38,7 +38,6 @@ cockroach-data/
 
 # Environment variables
 .env
-.env.*
 
 # Log files
 *.log
