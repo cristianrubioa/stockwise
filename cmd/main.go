@@ -8,6 +8,7 @@ import (
 	"github.com/cristianrubioa/stockwise/db"
 	"github.com/cristianrubioa/stockwise/internal/api"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
@@ -20,6 +21,14 @@ func main() {
 
 	// Create a new Gin router
 	router := gin.Default()
+
+	// ✅ Enable CORS (Allow frontend to access API)
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Content-Type"},
+		AllowCredentials: true,
+	}))
 
 	// Define API routes
 	router.GET("/stocks", api.GetStocks)
