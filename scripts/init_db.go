@@ -16,6 +16,9 @@ func main() {
 	// Connect to CockroachDB
 	db.InitDB()
 
+	// Ensure the `stockwise` database exists
+	createDatabaseIfNotExists("stockwise")
+
 	// Check if the `stocks` table exists
 	if !tableExists("stocks") {
 		createStocksTable()
@@ -47,6 +50,16 @@ func main() {
 	}
 
 	fmt.Println("🎉 Initialization complete.")
+}
+
+// Ensures the database exists
+func createDatabaseIfNotExists(databaseName string) {
+	query := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s;", databaseName)
+	_, err := db.Conn.Exec(context.Background(), query)
+	if err != nil {
+		log.Fatal("❌ Error creating database:", err)
+	}
+	fmt.Println("✅ Database ensured:", databaseName)
 }
 
 // Checks if a table exists in CockroachDB
