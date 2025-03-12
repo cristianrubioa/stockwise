@@ -33,6 +33,7 @@ func main() {
 	// Define API routes
 	router.GET("/stocks", api.GetStocks)
 	router.GET("/stocks/:ticker", api.GetStockByTicker)
+	router.GET("/recommendation", api.GetRecommendation)
 
 	// Start the server on the specified port
 	fmt.Println("🚀 Server running on http://localhost:" + *port)
