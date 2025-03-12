@@ -3,18 +3,27 @@ package api
 import (
 	"fmt"
 	"log"
+	"os"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/cristianrubioa/stockwise/internal/models"
+	"github.com/go-resty/resty/v2"
+	"github.com/joho/godotenv"
 )
 
-const API_URL = "https://8j5baasof2.execute-api.us-west-2.amazonaws.com/production/swechallenge/list"
-const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRlbXB0cyI6NDcsImVtYWlsIjoiY3Jpc3RpYW5ydWJpb2FAZ21haWwuY29tIiwiZXhwIjoxNzQxMDYwNDYyLCJpZCI6IjAiLCJwYXNzd29yZCI6IicgT1IgJzEnPScxIn0.wvNrQzjc6SJ5rxQL8QdSvdDJXEQvSyPaQkaCcrUx0Cw"
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
 
 func FetchStockData(nextPage string) (*models.ApiResponse, error) {
+	apiURL := os.Getenv("API_URL")
+	apiKey := os.Getenv("API_KEY")
+
 	client := resty.New()
 	request := client.R().
-		SetHeader("Authorization", "Bearer "+API_KEY).
+		SetHeader("Authorization", "Bearer "+apiKey).
 		SetHeader("Content-Type", "application/json")
 
 	if nextPage != "" {
@@ -22,7 +31,7 @@ func FetchStockData(nextPage string) (*models.ApiResponse, error) {
 	}
 
 	var response models.ApiResponse
-	resp, err := request.SetResult(&response).Get(API_URL)
+	resp, err := request.SetResult(&response).Get(apiURL)
 	if err != nil {
 		log.Println("Error making HTTP request:", err)
 		return nil, err
